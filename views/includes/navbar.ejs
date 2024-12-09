@@ -1,0 +1,56 @@
+<style>
+  .search {
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    margin: 0 auto;
+    border: 1px solid #ced4da;
+    padding: 0.8rem 1.2rem;
+    padding-left: 1.6rem;
+    border-radius: 25px;
+  }
+
+  .search-icon {
+    font-size: 1.2rem;
+    color: #fff;
+    background-color: #ff385c;
+    border-radius: 25px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: 0.3s background-color;
+  }
+
+  .search-icon:hover {
+    background-color: #d42f4d;
+  }
+
+  .search-input[type='text'] {
+    border: none;
+    padding: 0;
+  }
+</style>
+
+<header class="header">
+  <a href="/listings">
+    <i class="fa-regular fa-compass logo"></i>
+  </a>
+
+  <nav class="main-nav">
+    <ul class="main-nav-list">
+      <li><a class="main-nav-link" href="/listings">Explore</a></li>
+
+      <li class="search">
+        <input type="text" placeholder="Search destinations" class="search-input" />
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+      </li>
+
+      <li><a class="main-nav-link" href="/listings/new">Airbnb your home</a></li>
+      <% if (!currUser) {%>
+      <li><a class="main-nav-link" href="/user/signup">Sign up</a></li>
+      <li><a class="main-nav-link" href="/user/login">Login</a></li>
+      <% } %> <% if(currUser) {%>
+      <li><span class="welcome-user"><%= currUser.username[0].toUpperCase() + currUser.username.slice(1) %>,</span><a class="main-nav-link" href="/user/logout">Logout</a></li>
+      <% }%>
+    </ul>
+  </nav>
+</header>

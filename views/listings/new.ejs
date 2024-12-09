@@ -1,0 +1,44 @@
+<% layout('/layouts/boilerplate') %>
+<body>
+  <section class="section-new">
+    <div class="container">
+      <h3 class="section-heading">Create Listing :</h3>
+
+      <form method="post" action="/listings" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="title">Title : </label>
+          <input type="text" name="listing[title]" id="title" placeholder="Add a catchy title" required />
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description : </label>
+          <textarea class="message-textarea" name="listing[description]" placeholder="Enter description" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="image">Upload Image : </label>
+          <input style="padding: 0" class="custom-file-upload" type="file" name="listing[image]" id="image" required />
+        </div>
+
+        <div class="form-group-flex">
+          <div class="form-group">
+            <label for="price">Price : </label>
+            <input type="number" name="listing[price]" placeholder="Enter price" required />
+          </div>
+
+          <div class="form-group form-lg-3">
+            <label for="location">Location : </label>
+            <input type="text" name="listing[location]" placeholder="Enter location" required />
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 0">
+          <label for="country">Country : </label>
+          <input type="text" name="listing[country]" placeholder="Enter country" required />
+        </div>
+
+        <button class="submit-btn">Submit</button>
+      </form>
+    </div>
+  </section>
+</body>

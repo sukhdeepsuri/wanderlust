@@ -1,0 +1,49 @@
+<% layout('/layouts/boilerplate') %>
+<body>
+  <section class="section-edit">
+    <div class="container">
+      <h3 class="section-heading">Edit listing :</h3>
+
+      <form method="post" action="/listings/<%= listing.id %>/?_method=PUT" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="title">Title : </label>
+          <input type="text" name="listing[title]" value="<%= listing.title %>" placeholder="enter title" />
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description : </label>
+          <textarea name="listing[description]" placeholder="enter description" class="message-textarea"><%= listing.description %></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Original Image : </label>
+          <img src="<%= originalImageUrl %>" style="width: 30%; border-radius: 0.5rem; object-fit: cover" />
+        </div>
+
+        <div class="form-group">
+          <label for="image">Upload Image : </label>
+          <input style="padding: 0" class="custom-file-upload" type="file" name="listing[image]" id="image" />
+        </div>
+
+        <div class="form-group-flex">
+          <div class="form-group">
+            <label for="price">Price : </label>
+            <input type="number" name="listing[price]" value="<%= listing.price %>" placeholder="enter price" />
+          </div>
+
+          <div class="form-group form-lg-3">
+            <label for="location">Location : </label>
+            <input type="text" name="listing[location]" value="<%= listing.location %>" placeholder="enter location" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="country">Country : </label>
+          <input type="text" name="listing[country]" value="<%= listing.country %>" placeholder="enter country" />
+        </div>
+
+        <button class="submit-btn">Submit</button>
+      </form>
+    </div>
+  </section>
+</body>

@@ -1,0 +1,321 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  /* font-size: 10px  */
+  /* 10px / 16px = 0.625 = 62.5% */
+  /* Percentage of user's browser font size setting. */
+  font-size: 62.5%;
+  overflow-x: hidden;
+}
+
+body {
+  color: #444;
+  font-family: 'Inter', sans-serif;
+  line-height: 1;
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  margin-top: auto;
+}
+
+/* ------------------------ */
+/* GENERAL REUSABLE STYLES */
+/* ------------------------ */
+
+.container {
+  /* 1140px */
+  /* max-width: 120rem;
+  margin: 0 auto;
+  padding: 0 3.2rem; */
+  padding: 0 4.8rem;
+}
+
+.btn,
+.btn:link,
+.btn:visited {
+  border-radius: 1rem;
+  display: inline-block;
+  font-size: 2rem;
+  font-weight: 500;
+  padding: 1.6rem 3.2rem;
+  text-decoration: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  /* Transition needs to be applied only on the original "state". */
+  transition: all 0.3s;
+}
+
+.btn--full:link,
+.btn--full:visited {
+  color: #fff;
+  background-color: #ff385c;
+}
+
+.btn--full:hover,
+.btn--full:active {
+  background-color: #d42f4d;
+}
+
+.btn--outline:link,
+.btn--outline:visited {
+  color: #555;
+  background-color: #fff;
+}
+
+.btn--outline:hover,
+.btn--outline:active {
+  color: #555;
+  background-color: #fdf2e9;
+  /* Trick to add border inside */
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
+.submit-btn {
+  border-radius: 0.8rem;
+  background-color: #ff385c;
+  color: #fff;
+  display: inline-block;
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding: 1.4rem 2.4rem;
+  text-decoration: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  margin-top: 2.4rem;
+  transition: all 0.3s;
+}
+
+.submit-btn:hover {
+  background-color: #d42f4d;
+}
+
+.grid {
+  display: grid;
+  column-gap: 6.4rem;
+  row-gap: 9.6rem;
+}
+
+.grid--2-cols {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.grid--3-cols {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.grid--4-cols {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.grid--5-cols {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.heading-primary,
+.heading-secondary,
+.heading-tertiary {
+  color: #333;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.heading-primary {
+  font-size: 5.2rem;
+  line-height: 1.05;
+  margin-bottom: 3.2rem;
+}
+
+.heading-secondary {
+  font-size: 4.4rem;
+  line-height: 1.2;
+  margin-bottom: 9.6rem;
+}
+
+.heading-tertiary {
+  font-size: 3rem;
+  line-height: 1.2;
+  margin-bottom: 3.2rem;
+}
+
+.section-heading {
+  font-size: 2.4rem;
+  font-weight: 600;
+  margin-bottom: 2.4rem;
+}
+
+/* ------------------------ */
+/* INPUT STYLES */
+/* ------------------------ */
+
+input[type='text'],
+input[type='email'],
+input[type='number'],
+input[type='file'],
+input[type='password'],
+textarea,
+select {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 7px;
+  border: 2px solid #dee2e6;
+  border-radius: 5px;
+  outline: none;
+  font-family: inherit;
+}
+
+.custom-file-upload {
+  cursor: pointer;
+}
+
+.custom-file-upload::-webkit-file-upload-button {
+  border: none;
+  border-right: 2px solid #dee2e6;
+  display: inline-block;
+  padding: 0.8rem 1.2rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.custom-file-upload::-webkit-file-upload-button:hover {
+  background-color: #dee2e6;
+}
+
+input:focus,
+textarea:focus {
+  border: 2px solid #adb5bd;
+}
+
+/* ------------------------ */
+/* HELPER / SETTINGS CLASSES */
+/* ------------------------ */
+
+.form-group-flex {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.form-lg-3 {
+  flex: 1;
+}
+
+/* ------------------------ */
+/* ALERT ERROR & SUCCESS CLASSES */
+/* ------------------------ */
+
+.section-alert .container {
+  max-width: 90rem;
+  margin: 0 auto;
+  padding: 0 3.2rem;
+}
+
+.alert {
+  padding: 1.6rem 2.4rem;
+  margin-top: 3.2rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.alert p {
+  font-size: 1.6rem;
+}
+
+.error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+}
+
+.success {
+  color: #0a3622;
+  background-color: #d1e7dd;
+  border: 1px solid #a3cfbb;
+}
+
+.dismiss-btn {
+  font-size: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #444;
+}
+
+/* ------------------------ */
+/* ALERT ERROR & SUCCESS CLASSES */
+/* ------------------------ */
+
+#map {
+  border-radius: 5px;
+  border: 2px solid #dee2e6;
+  width: 100%;
+  height: 400px;
+}
+
+/* ------------------------ */
+/* TOGGLE SWITCH */
+/* ------------------------ */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 24px;
+}
+
+/* Hide default checkbox */
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The track */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  background-color: #ccc;
+  border-radius: 24px;
+  width: 100%;
+  height: 100%;
+  transition: background-color 0.3s;
+}
+
+/* The circular slider */
+.slider::before {
+  content: '';
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 2px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s;
+}
+
+/* Toggled state */
+.toggle-switch input:checked + .slider {
+  background-color: #ff385c;
+}
+
+.toggle-switch input:checked + .slider::before {
+  transform: translateX(23px);
+}
+
+.hide {
+  display: none;
+}

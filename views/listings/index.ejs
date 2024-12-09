@@ -1,0 +1,152 @@
+<% layout('/layouts/boilerplate') %>
+<body>
+  <style>
+    .filters {
+      display: flex;
+      gap: 4.8rem;
+      margin-bottom: 3.2rem;
+      align-items: center;
+    }
+
+    .filter {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+
+    .filter:hover {
+      opacity: 1;
+      cursor: pointer;
+    }
+
+    .filter-icon {
+      font-size: 2.2rem;
+    }
+
+    .filter-text {
+      font-size: 1.4rem;
+      font-weight: 500;
+      letter-spacing: -0.2px;
+    }
+
+    .tax-box {
+      border: 1px solid #dee2e6;
+      border-radius: 1.6rem;
+      padding: 1.6rem 1.6rem;
+      margin-left: auto;
+    }
+
+    .tax-box {
+      display: flex;
+      gap: 1.2rem;
+      align-items: center;
+    }
+
+    .tax-text {
+      font-size: 1.6rem;
+      font-weight: 500;
+    }
+  </style>
+
+  <section class="section-index">
+    <div class="container">
+      <!-- <h1 class="section-heading">All Listings</h1> -->
+      <div class="filters">
+        <div class="filter">
+          <i class="fa-solid fa-fire filter-icon"></i>
+          <span class="filter-text">Trending</span>
+        </div>
+
+        <div class="filter">
+          <i class="fa-solid fa-bed filter-icon"></i>
+          <span class="filter-text">Rooms</span>
+        </div>
+
+        <div class="filter">
+          <i class="fa-solid fa-mountain-city filter-icon"></i>
+          <span class="filter-text">Iconic cities</span>
+        </div>
+
+        <div class="filter">
+          <i class="fa-solid fa-mountain filter-icon"></i>
+          <span class="filter-text">Mountains</span>
+        </div>
+
+        <div class="filter">
+          <i class="fa-brands fa-fort-awesome filter-icon"></i>
+          <span class="filter-text">Castles</span>
+        </div>
+
+        <div class="filter">
+          <i class="fa-solid fa-campground filter-icon"></i>
+          <span class="filter-text">Camping</span>
+        </div>
+
+        <div class="filter">
+          <i class="fa-solid fa-cow filter-icon"></i>
+          <span class="filter-text">Farms</span>
+        </div>
+
+        <div class="filter">
+          <i class="fa-solid fa-umbrella-beach filter-icon"></i>
+          <span class="filter-text">Beach</span>
+        </div>
+
+        <div class="filter">
+          <i class="fa-solid fa-sailboat filter-icon"></i>
+          <span class="filter-text">Boats</span>
+        </div>
+
+        <div class="filter">
+          <i class="fa-regular fa-snowflake filter-icon"></i>
+          <span class="filter-text">Arctic</span>
+        </div>
+
+        <div class="filter">
+          <i class="fa-solid fa-igloo filter-icon"></i>
+          <span class="filter-text">Domes</span>
+        </div>
+
+        <div class="tax-box">
+          <p class="tax-text">Display total after taxes</p>
+          <label class="toggle-switch">
+            <input type="checkbox" id="tax-switch" />
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="cards-grid">
+        <% for(let listing of allListings) {%>
+        <div class="card">
+          <div class="card-img-box">
+            <a href="/listings/<%= listing._id %>"><img src="<%= listing.image.url %>" class="card-img" alt="listing image" /></a>
+          </div>
+
+          <div class="card-body">
+            <p class="card-title"><%= listing.title %></p>
+            <p class="card-price">&#8377; <%= listing.price.toLocaleString('en-IN') %>/ night <em class="tax-info hide">+18% GST</em></p>
+          </div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const taxSwitch = document.getElementById('tax-switch');
+    const taxInfo = document.querySelectorAll('.tax-info');
+
+    taxSwitch.addEventListener('click', function () {
+      taxInfo.forEach(el => {
+        el.classList.toggle('hide');
+      });
+    });
+  </script>
+</body>
+
+<!-- More Features To Add : -->
+<!-- 1) Filter listings based on the category which the user clicks. -->

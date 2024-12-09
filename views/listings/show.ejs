@@ -1,0 +1,107 @@
+<% layout('/layouts/boilerplate') %>
+
+<script>
+  const mapToken = '<%= process.env.MAP_TOKEN %>';
+  const listing = <%- JSON.stringify(listing) %>;
+</script>
+
+<body>
+  <section class="section-show">
+    <div class="container">
+      <h1 class="section-heading"><%= listing.title %></h1>
+
+      <div class="show-card">
+        <div class="show-card-img-box">
+          <img src="<%= listing.image.url %>" class="card-img" alt="listing image" />
+        </div>
+
+        <div class="card-body">
+          <!-- <p class="card-title"></p> -->
+          <p class="show-card-description">
+            Created by : <span><em><%= listing.owner.username %></em></span>
+          </p>
+          <p class="show-card-description"><%= listing.description %></p>
+          <p class="show-card-price">&#8377; <%= listing.price.toLocaleString('en-IN') %>/ night</p>
+          <p class="show-card-location"><%= listing.location %>, <span><%= listing.country %></span></p>
+        </div>
+      </div>
+
+      <% if (currUser && currUser._id.equals(listing.owner._id)) {%>
+      <div class="form-group-flex show-delete-box">
+        <a href="/listings/<%= listing._id %>/edit"><button class="submit-btn show-edit-btn">Edit</button></a>
+
+        <form method="post" action="/listings/<%= listing._id %>?_method=DELETE">
+          <button class="submit-btn show-delete-btn">Delete</button>
+        </form>
+      </div>
+      <% } %> <% if (currUser) {%>
+      <hr class="section-ruler" />
+
+      <div class="review-section">
+        <h2 class="section-heading">Leave a review :</h2>
+        <form method="post" action="/listings/<%= listing._id %>/reviews">
+          <div class="form-group" style="display: flex; gap: 1.6rem; align-items: center">
+            <label for="rating">Rating : </label>
+            <fieldset class="starability-heart">
+              <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+              <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+              <label for="first-rate1" title="Terrible">1 star</label>
+              <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+              <label for="first-rate2" title="Not good">2 stars</label>
+              <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+              <label for="first-rate3" title="Average">3 stars</label>
+              <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+              <label for="first-rate4" title="Very good">4 stars</label>
+              <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+              <label for="first-rate5" title="Amazing">5 stars</label>
+            </fieldset>
+          </div>
+
+          <div class="form-group">
+            <label for="comment">Comment : </label>
+            <textarea class="message-textarea" id="comment" name="review[comment]" placeholder="Write a comment" required></textarea>
+          </div>
+
+          <button class="submit-btn">Submit</button>
+        </form>
+      </div>
+
+      <% } %> <% if (listing.reviews.length) { %>
+      <hr class="section-ruler" />
+
+      <div class="review-section">
+        <h2 class="section-heading">Reviews :</h2>
+
+        <ul class="reviews-grid">
+          <% for (review of listing.reviews) { %>
+          <li class="review">
+            <div class="review-user">
+              <img src="/user.png" class="review-user-img" />
+              <span class="review-user-name"><%= review.author.username %></span>
+            </div>
+
+            <div class="review-rating" style="display: flex; gap: 0.8rem; align-items: center">
+              <p class="starability-result" data-rating="<%= review.rating %>"></p>
+              <p>- <%= review.createdAt.toLocaleDateString('en-IN', { month: 'long', year: 'numeric' }) %></p>
+            </div>
+
+            <p class="review-message"><%= review.comment %></p>
+
+            <form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+              <button class="submit-btn delete-btn"><i class="fa-solid fa-trash delete-icon"></i> Delete</button>
+            </form>
+          </li>
+          <% } %>
+        </ul>
+      </div>
+      <% } %>
+
+      <div class="section-map">
+        <h2 class="section-heading">Where you'll be 🌍</h2>
+        <div id="map"></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/map.js"></script>
+</body>
