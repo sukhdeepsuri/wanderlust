@@ -51,12 +51,11 @@ const store = MongoStore.create({
   touchAfter: 24 * 3600,
 });
 
-store.on('error', () => {
+store.on('error', err => {
   console.log('ERROR in MONGO SESSION STORE', err);
 });
 
 const sessionOptions = {
-  store,
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: true,
@@ -65,11 +64,8 @@ const sessionOptions = {
     maxAge: 7 * 24 * 60 * 60 * 1000,
     httpOnly: true,
   },
+  store,
 };
-
-app.get('/', (req, res) => {
-  res.send('Hi, I am root');
-});
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -91,6 +87,10 @@ app.use((req, res, next) => {
 app.use('/user', userRouter);
 app.use('/listings', listingRouter);
 app.use('/listings/:id/reviews', reviewRouter);
+
+app.get('/', (req, res) => {
+  res.redirect('/listings');
+});
 
 // Handling Errors ⛔
 app.all('*', (req, res, next) => {

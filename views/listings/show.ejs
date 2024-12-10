@@ -87,9 +87,13 @@
 
             <p class="review-message"><%= review.comment %></p>
 
+            <% if (currUser && currUser._id.equals(review.author._id)) { %>
+
             <form method="post" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
               <button class="submit-btn delete-btn"><i class="fa-solid fa-trash delete-icon"></i> Delete</button>
             </form>
+
+            <% } %>
           </li>
           <% } %>
         </ul>
