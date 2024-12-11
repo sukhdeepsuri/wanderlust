@@ -7,7 +7,15 @@ module.exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
     req.session.redirectUrl = req.originalUrl;
     req.flash('error', 'You must be logged in to create a listing!');
-    return res.redirect('/user/login');
+
+    // Ensure session is saved before redirecting
+    req.session.save(err => {
+      if (err) {
+        return next(new ExpressError(500, 'Session save failed'));
+      }
+      return res.redirect('/user/login');
+    });
+    return; // Stops further execution
   }
   next();
 };
@@ -43,7 +51,15 @@ module.exports.isOwner = async (req, res, next) => {
 
   if (!listing.owner._id.equals(res.locals.currUser._id)) {
     req.flash('error', 'You are not the owner of this listing.');
-    return res.redirect(`/listings/${id}`);
+
+    // Ensure session is saved before redirecting
+    req.session.save(err => {
+      if (err) {
+        return next(new ExpressError(500, 'Session save failed'));
+      }
+      return res.redirect(`/listings/${id}`);
+    });
+    return; // Stops further execution
   }
 
   next();
@@ -56,7 +72,16 @@ module.exports.isReviewAuthor = async (req, res, next) => {
 
   if (!review.author._id.equals(res.locals.currUser._id)) {
     req.flash('error', 'You are not the author of this review.');
-    return res.redirect(`/listings/${id}`);
+
+    // Ensure session is saved before redirecting
+    req.session.save(err => {
+      if (err) {
+        return next(new ExpressError(500, 'Session save failed'));
+      }
+      return res.redirect(`/listings/${id}`);
+    });
+
+    return; // Stops further execution
   }
 
   next();

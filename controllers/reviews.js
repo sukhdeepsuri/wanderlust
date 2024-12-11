@@ -12,7 +12,13 @@ module.exports.createReview = async (req, res) => {
   await listing.save();
 
   req.flash('success', 'Review Added Successfully');
-  res.redirect(`/listings/${listing._id}`);
+
+  req.session.save(err => {
+    if (err) {
+      return next(new ExpressError(500, 'Session save failed'));
+    }
+    return res.redirect(`/listings/${listing._id}`);
+  });
 };
 
 module.exports.destroyReview = async (req, res) => {
@@ -24,5 +30,11 @@ module.exports.destroyReview = async (req, res) => {
 
   await Review.findByIdAndDelete(reviewId);
   req.flash('success', 'Review Deleted Successfully');
-  res.redirect(`/listings/${id}`);
+
+  req.session.save(err => {
+    if (err) {
+      return next(new ExpressError(500, 'Session save failed'));
+    }
+    return res.redirect(`/listings/${id}`);
+  });
 };

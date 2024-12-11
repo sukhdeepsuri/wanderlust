@@ -25,7 +25,14 @@ module.exports.showListing = async (req, res) => {
 
   if (!listing) {
     req.flash('error', 'Listing you requested for does not exist.');
-    res.redirect('/listings');
+
+    req.session.save(err => {
+      if (err) {
+        return next(new ExpressError(500, 'Session save failed'));
+      }
+
+      return res.redirect('/listings');
+    });
   } else {
     res.render('listings/show.ejs', { listing });
   }
@@ -53,7 +60,13 @@ module.exports.createListing = async (req, res) => {
 
   await newListing.save();
   req.flash('success', 'New Listing Created');
-  res.redirect('/listings');
+
+  req.session.save(err => {
+    if (err) {
+      return next(new ExpressError(500, 'Session save failed'));
+    }
+    return res.redirect('/listings');
+  });
 };
 
 module.exports.renderEditForm = async (req, res) => {
@@ -62,7 +75,12 @@ module.exports.renderEditForm = async (req, res) => {
 
   if (!listing) {
     req.flash('error', 'Listing you requested for does not exist.');
-    res.redirect('/listings');
+    req.session.save(err => {
+      if (err) {
+        return next(new ExpressError(500, 'Session save failed'));
+      }
+      return res.redirect('/listings');
+    });
   } else {
     let originalImageUrl = listing.image.url;
     originalImageUrl = originalImageUrl.replace('/upload', '/upload/w_250');
@@ -85,7 +103,12 @@ module.exports.updateListing = async (req, res) => {
   }
 
   req.flash('success', 'Listing Updated Successfully');
-  res.redirect(`/listings/${id}`);
+  req.session.save(err => {
+    if (err) {
+      return next(new ExpressError(500, 'Session save failed'));
+    }
+    return res.redirect(`/listings/${id}`);
+  });
 };
 
 module.exports.destroyListing = async (req, res) => {
@@ -93,5 +116,11 @@ module.exports.destroyListing = async (req, res) => {
 
   await Listing.findByIdAndDelete(id);
   req.flash('success', 'Listing Deleted Successfully');
-  res.redirect('/listings');
+
+  req.session.save(err => {
+    if (err) {
+      return next(new ExpressError(500, 'Session save failed'));
+    }
+    return res.redirect('/listings');
+  });
 };

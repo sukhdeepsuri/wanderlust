@@ -15,21 +15,38 @@ module.exports.signup = async (req, res, next) => {
     req.login(registeredUser, err => {
       if (err) return next(err);
       req.flash('success', `Welcome ${username} to Wanderlust! `);
-      res.redirect('/listings');
+
+      req.session.save(err => {
+        if (err) {
+          return next(new ExpressError(500, 'Session save failed'));
+        }
+        return res.redirect('/listings');
+      });
     });
   } catch (e) {
     req.flash('error', e.message);
-    res.redirect('/user/signup');
+    req.session.save(err => {
+      if (err) {
+        return next(new ExpressError(500, 'Session save failed'));
+      }
+      return res.redirect('/user/signup');
+    });
   }
 };
 
-module.exports.renderLoginForm = (req, res) => {
+module.exports.renderLoginForm = (req, res, next) => {
   res.render('users/login.ejs');
 };
 
 module.exports.login = async (req, res) => {
   req.flash('success', 'Welcome back to Wanderlust!');
-  res.redirect(res.locals.redirectTo || '/listings');
+
+  req.session.save(err => {
+    if (err) {
+      return next(new ExpressError(500, 'Session save failed'));
+    }
+    return res.redirect(res.locals.redirectTo || '/listings');
+  });
 };
 
 module.exports.logout = (req, res, next) => {
@@ -38,6 +55,12 @@ module.exports.logout = (req, res, next) => {
       return next(err);
     }
     req.flash('success', 'You are logged out!');
-    res.redirect('/listings');
+
+    req.session.save(err => {
+      if (err) {
+        return next(new ExpressError(500, 'Session save failed'));
+      }
+      return res.redirect('/listings');
+    });
   });
 };
